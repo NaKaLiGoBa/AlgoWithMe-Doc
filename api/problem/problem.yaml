@@ -1,0 +1,91 @@
+get:
+  summary: 문제 보기
+  description: 문제 보기
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+    - in: query
+      name: language
+      schema:
+        type: string
+      required: false
+      description: 프로그래밍 언어
+  responses:
+    '200':
+      description: 문제 정보
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              number:
+                type: number
+                description: 문제 번호
+              status:
+                type: string
+                description: 상태
+                enum: [성공, 실패, 미해결]
+              title:
+                type: string
+                description: 문제 제목
+              acceptance:
+                type: string
+                description: 정답률
+                example: 66.6
+              difficulty:
+                type: string
+                description: 난이도
+                enum: [쉬움, 보통, 어려움]
+              description:
+                type: string
+                description: 문제 설명
+              code:
+                type: string
+                description: 작성된 혹은 기본 코드
+              language:
+                type: string
+                description: 작성된 코드의 프로그래밍 언어
+                enum: [Java, Python, JavaScript]
+              availableLanguage:
+                type: array
+                description: 사용 가능한 언어
+                items:
+                  type: string
+                  enum: [Java, Python, JavaScript]
+              testcases:
+                type: array
+                description: 테스트케이스
+                items:
+                  type: object
+                  properties:
+                    number:
+                      type: number
+                      description: 테스트케이스 번호
+                    inputs:
+                      type: array
+                      items:
+                        type: object
+                        description: 테스트케이스 입력
+                        properties:
+                          name:
+                            type: string
+                            description: 입력 이름
+                          value:
+                            type: string
+                            description: 입력 값
+                    expected:
+                      type: string
+                      description: 테스트케이스 예상 결과
+              tags:
+                type: array
+                description: 태그
+                items:
+                  type: string
+                  description: 태그 이름
+                  enum: [DFS, BFS, Sort]
+
+# 지원하지 않는 언어인 경우

@@ -1,0 +1,49 @@
+post:
+  summary: 테스트케이스 통과 여부 확인
+  description: 테스트케이스 통과 여부 확인
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            language:
+              type: string
+              description: 프로그래밍 언어
+            code:
+              type: string
+              description: 작성된 풀이 코드
+  responses:
+    '200':
+      description: 통과 여부 확인 성공
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                number:
+                  type: number
+                  description: 테스트케이스 번호
+                isAnswer:
+                  type: boolean
+                  description: 정답 여부
+                inputs:
+                  type: array
+                  items:
+                    type: object
+                    description: 입력
+                    properties:
+                      name:
+                        type: string
+                        description: 입력 이름
+                      value:
+                        type: string
+                        description: 입력 값
+                output:
+                  type: string
+                  description: 출력
+                expected:
+                  type: string
+                  description: 예상 출력
