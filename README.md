@@ -33,7 +33,7 @@ yarn global add @stoplight/prism-cli
 2. Mocking
 
 ```shell
-prism mock -p 8080 https://nakaligoba.github.io/AlgoWithMe-Doc/root.yaml
+prism mock -p 8080 https://nakaligoba.github.io/AlgoWithMe-Doc/api/root.yaml
 ```
 
 http://localhost:8080으로 API Mock Server가 배포됩니다.
