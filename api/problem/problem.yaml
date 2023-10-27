@@ -43,18 +43,18 @@ get:
               description:
                 type: string
                 description: 문제 설명
-              template:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    language:
-                      type: string
-                      description: 작성된 코드의 프로그래밍 언어
-                      enum: [Java, Python, JavaScript]
-                    defaultCode:
-                      type: string
-                      description: 기본 코드
+              defaultCodes:
+                type: object
+                properties:
+                  java:
+                    type: string
+                    description: Java 기본 코드
+                  python:
+                    type: string
+                    description: Python 기본 코드
+                  javascript:
+                    type: string
+                    description: JavaScript 기본 코드
               availableLanguage:
                 type: array
                 description: 사용 가능한 언어
@@ -120,18 +120,18 @@ get:
               description:
                 type: string
                 description: 문제 설명
-              template:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    language:
-                      type: string
-                      description: 작성된 코드의 프로그래밍 언어
-                      enum: [ Java, Python, JavaScript ]
-                    defaultCode:
-                      type: string
-                      description: 기본 코드
+              defaultCodes:
+                type: object
+                properties:
+                  java:
+                    type: string
+                    description: Java 기본 코드
+                  python:
+                    type: string
+                    description: Python 기본 코드
+                  javascript:
+                    type: string
+                    description: JavaScript 기본 코드
               availableLanguage:
                 type: array
                 description: 사용 가능한 언어
