@@ -12,6 +12,8 @@ paths:
     $ref: './auth/emailCheck.yaml'
   /api/v1/auth/signin:
     $ref: './auth/signin.yaml'
+  /api/v1/auth/signin/kakao:
+    $ref: './auth/kakaoSignin.yaml'
   /api/v1/auth/signup:
     $ref: './auth/signup.yaml'
   /api/v1/auth/password/reset/email:
