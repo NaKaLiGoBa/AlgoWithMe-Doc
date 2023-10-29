@@ -15,7 +15,7 @@ post:
               description: 비밀번호
             nickname:
               type: string
-              description: 이름
+              description: 닉네임
   responses:
     '200':
       description: 회원가입 성공
@@ -24,9 +24,17 @@ post:
           schema:
             type: object
             properties:
-              accessToken:
+              message:
                 type: string
-                description: 인증 토큰
-    '401':
+                description: 회원가입 성공 메시지
+    '422':
       description: 회원가입 실패
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: 회원가입 실패 메시지(이미 등록된 이메일)
   

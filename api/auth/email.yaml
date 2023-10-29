@@ -21,5 +21,13 @@ post:
               message:
                 type: string
                 description: 인증번호 전송 성공 메시지
-    '401':
+    '422':
       description: 인증번호 전송 실패
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: 인증번호 전송 실패 메시지(이미 등록된 이메일)
