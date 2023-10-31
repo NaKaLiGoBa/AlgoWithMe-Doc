@@ -1,6 +1,6 @@
 post:
   summary: 회원가입
-  description: 이메일, 비밀번호로 회원가입
+  description: 이메일, 비밀번호, 닉네임으로 회원가입
   tags: [ Auth ]
   requestBody:
     content:
@@ -18,7 +18,7 @@ post:
               type: string
               description: 닉네임
   responses:
-    '200':
+    '201':
       description: 회원가입 성공
       content:
         application/json:
@@ -37,5 +37,5 @@ post:
             properties:
               message:
                 type: string
-                description: 회원가입 실패 메시지(이미 등록된 이메일)
+                description: 회원가입 실패 메시지(이미 등록된 이메일 또는 닉네임)
   
