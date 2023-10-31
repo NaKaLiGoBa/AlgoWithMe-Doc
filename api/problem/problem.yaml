@@ -100,10 +100,6 @@ get:
               number:
                 type: number
                 description: 문제 번호
-              status:
-                type: string
-                description: 상태
-                enum: [ 성공, 실패, 미해결 ]
               title:
                 type: string
                 description: 문제 제목
