@@ -1,0 +1,99 @@
+get:
+  summary: 풀이 글 리스트 보기
+  description: 풀이 글 리스트 보기 - 무한 스크롤
+  tags: [ Solution ]
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+    - in: query
+      name: cursor
+      schema:
+        type: number
+      required: false
+      description: 커서
+    - in: query
+      name: size
+      schema:
+        type: number
+      required: false
+      description: 불러올 리스트 길이
+  responses:
+    '200':
+      description: 풀이 글 리스트
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              totalCount:
+                type: number
+                description: 풀이 글 총 개수
+              solutions:
+                type: array
+                description: 풀이 글 목록
+                items:
+                  type: object
+                  properties:
+                    author:
+                      type: object
+                      properties:
+                        avatar:
+                          type: string
+                        nickname:
+                          type: string
+                    solution:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          description: 풀이 글 식별자
+                        title:
+                          type: string
+                          description: 제목
+              _link:
+                type: object
+                description: 커서 정소
+                properties:
+                  nextCursor:
+                    type: number
+                    description: 다음 커서
+post:
+  summary: 풀이 글 작성
+  description: 풀이 작성
+  tags: [ Solution ]
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: true
+      description: Bearer Access 토큰
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+              description: 제목
+            content:
+              type: string
+              description: 풀이 글 내용
+            languages:
+              type: array
+              items:
+                enum: ["Java", "Python", "JavaScript"]
+  responses:
+    '201':
+      description: 풀이 글 생성 완료

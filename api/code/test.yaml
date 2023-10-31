@@ -1,6 +1,7 @@
 post:
   summary: 테스트케이스 통과 여부 확인
   description: 테스트케이스 통과 여부 확인
+  tags: [ Code ]
   requestBody:
     content:
       application/json:

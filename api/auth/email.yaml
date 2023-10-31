@@ -1,6 +1,7 @@
 post:
   summary: 이메일 인증
   description: 입력한 이메일로 인증번호 요청
+  tags: [Auth]
   requestBody:
     content:
       application/json:

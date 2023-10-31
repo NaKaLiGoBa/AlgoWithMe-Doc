@@ -1,6 +1,7 @@
 post:
   summary: 회원가입
   description: 이메일, 비밀번호로 회원가입
+  tags: [ Auth ]
   requestBody:
     content:
       application/json:

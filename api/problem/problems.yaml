@@ -1,6 +1,7 @@
 get:
   summary: 모든 문제 목록 보기
   description: 모든 문제 목록 보기
+  tags: [ Problem ]
   parameters:
     - in: query
       name: page

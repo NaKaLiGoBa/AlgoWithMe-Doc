@@ -1,6 +1,7 @@
 get:
   summary: 문제 보기
   description: 문제 보기
+  tags: [ Problem ]
   parameters:
     - in: path
       name: id
@@ -55,12 +56,6 @@ get:
                   javascript:
                     type: string
                     description: JavaScript 기본 코드
-              availableLanguage:
-                type: array
-                description: 사용 가능한 언어
-                items:
-                  type: string
-                  enum: [Java, Python, JavaScript]
               testcases:
                 type: array
                 description: 테스트케이스
@@ -92,6 +87,9 @@ get:
                   type: string
                   description: 태그 이름
                   enum: [DFS, BFS, Sort]
+              totalSolutionCount:
+                type: number
+                description: 풀이 글 총 개수
     '401':
       description: 문제 정보, 인증 토큰 만료
       content:
@@ -132,12 +130,6 @@ get:
                   javascript:
                     type: string
                     description: JavaScript 기본 코드
-              availableLanguage:
-                type: array
-                description: 사용 가능한 언어
-                items:
-                  type: string
-                  enum: [ Java, Python, JavaScript ]
               testcases:
                 type: array
                 description: 테스트케이스
@@ -169,4 +161,7 @@ get:
                   type: string
                   description: 태그 이름
                   enum: [ DFS, BFS, Sort ]
+              totalSolutionCount:
+                type: number
+                description: 풀이 글 총 개수
 # 지원하지 않는 언어인 경우

@@ -28,3 +28,7 @@ paths:
     $ref: './code/test.yaml'
   /api/v1/problems/{id}/code/submit:
     $ref: './code/submit.yaml'
+  /api/v1/problems/{id}/solutions:
+    $ref: './solution/solutions.yaml'
+  /api/v1/problems/{problemId}/solutions/{solutionId}:
+    $ref: './solution/solution.yaml'

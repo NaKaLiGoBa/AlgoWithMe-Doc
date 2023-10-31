@@ -1,6 +1,7 @@
 post:
   summary: 정답 여부 확인
   description: 정답 여부 확인
+  tags: [ Code ]
   requestBody:
     content:
       application/json:

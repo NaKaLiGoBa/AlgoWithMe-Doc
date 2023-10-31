@@ -1,6 +1,7 @@
 post:
   summary: 이메일 인증 번호 체크
   description: 이메일 인증을 위한 인증번호 체크
+  tags: [ Auth ]
   requestBody:
     content:
       application/json:

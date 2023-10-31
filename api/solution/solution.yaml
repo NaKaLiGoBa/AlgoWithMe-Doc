@@ -1,0 +1,120 @@
+get:
+  summary: 풀이 글 보기
+  description: 풀이 글 보기
+  tags: [ Solution ]
+  parameters:
+    - in: path
+      name: problemId
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+    - in: path
+      name: solutionId
+      schema:
+        type: number
+      required: true
+      description: 풀이 글 식별자
+  responses:
+    '200':
+      description: 풀이 글
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              author:
+                type: object
+                properties:
+                  avatar:
+                    type: string
+                  nickname:
+                    type: string
+              solution:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    description: 제목
+                  createdAt:
+                    type: string
+                    format: date
+                    description: 글 작성 일자
+                  content:
+                    type: string
+                    description: 글 내용
+                  languages:
+                    type: array
+                    description: 풀이 언어 리스트
+                    items:
+                      enum: [ "Java", "Python", "JavaScript" ]
+
+put:
+  summary: 풀이 글 수정
+  description: 풀이 수정
+  tags: [ Solution ]
+  parameters:
+    - in: path
+      name: problemId
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+    - in: path
+      name: solutionId
+      schema:
+        type: number
+      required: true
+      description: 풀이 글 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: true
+      description: Bearer Access 토큰
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+              description: 제목
+            content:
+              type: string
+              description: 풀이 글 내용
+            languages:
+              type: array
+              items:
+                enum: [ "Java", "Python", "JavaScript" ]
+  responses:
+    '201':
+      description: 풀이 글 수정 완료
+
+delete:
+  summary: 풀이 글 삭제
+  description: 풀이 삭제
+  tags: [ Solution ]
+  parameters:
+    - in: path
+      name: problemId
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+    - in: path
+      name: solutionId
+      schema:
+        type: number
+      required: true
+      description: 풀이 글 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: true
+      description: Bearer Access 토큰
+  responses:
+    '204':
+      description: 풀이 글 삭제 완료
