@@ -103,4 +103,9 @@ post:
   responses:
     '201':
       description: 문제 생성 성공
-
+      headers:
+        Location:
+          schema:
+            type: string
+            format: uri
+          description: 생성된 문제 URI

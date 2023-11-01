@@ -91,7 +91,12 @@ put:
   responses:
     '201':
       description: 풀이 글 수정 완료
-
+      headers:
+        Location:
+          schema:
+            type: string
+            format: uri
+          description: 수정된 풀이 글 URI
 delete:
   summary: 풀이 글 삭제
   description: 풀이 삭제
