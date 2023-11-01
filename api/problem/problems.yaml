@@ -114,7 +114,7 @@ post:
             testcases:
               type: string
               description: 테스트케이스
-            answerCase:
+            answerCases:
               type: string
               description: 채점용 테스트케이스
             tags:
