@@ -57,3 +57,50 @@ get:
                         description: 태그 이름
                         enum: [DFS, BFS, Sort]
 # 페이지 번호가 음수 || 너무 클 때
+
+post:
+  summary: 문제 생성
+  description: Admin 유저가 문제를 생성
+  tags: [ Problem ]
+  parameters:
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: false
+      description: Bearer access token
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+              description: 문제 제목
+            difficulty:
+              type: string
+              description: 난이도
+              enum: [ 쉬움, 보통, 어려움 ]
+            description:
+              type: string
+              description: 문제 설명
+            parameters:
+              type: array
+              description: 입력 파라미터 이름
+              items:
+                type: string
+            testcases:
+              type: string
+              description: 테스트케이스
+            tags:
+              type: array
+              description: 태그
+              items:
+                type: string
+                description: 태그 이름
+                enum: [ DFS, BFS, Sort ]
+  responses:
+    '201':
+      description: 문제 생성 성공
+
