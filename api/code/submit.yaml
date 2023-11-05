@@ -2,6 +2,13 @@ post:
   summary: 정답 여부 확인
   description: 정답 여부 확인
   tags: [ Code ]
+  parameters:
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: false
+      description: Bearer access token
   requestBody:
     content:
       application/json:
