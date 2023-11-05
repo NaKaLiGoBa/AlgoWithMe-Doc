@@ -48,3 +48,17 @@ post:
                 expected:
                   type: string
                   description: 예상 출력
+    '400':
+      description: 컴파일 및 런타임 오류 발생
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: 오류 설명
+              type:
+                type: string
+                description: 어떤 종류의 오류인지
+                enum: ["Compile Error", "Runtime Error"]
