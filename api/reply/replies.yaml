@@ -1,0 +1,34 @@
+post:
+  summary: 답글 작성
+  description: 답글 작성
+  tags: [ Reply ]
+  parameters:
+    - in: path
+      name: commentId
+      schema:
+        type: number
+      required: true
+      description: 댓글 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: true
+      description: Bearer Access 토큰
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            content:
+              type: string
+              description: 답글 내용
+  responses:
+    '201':
+      description: 답글 작성 완료
+      headers:
+        Location:
+          schema:
+            type: number
+          description: 작성된 답글 식별자

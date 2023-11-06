@@ -32,3 +32,11 @@ paths:
     $ref: './solution/solutions.yaml'
   /api/v1/problems/{problemId}/solutions/{solutionId}:
     $ref: './solution/solution.yaml'
+  /api/v1/solutions/{solutionsId}/comments:
+    $ref: './comment/comments.yaml'
+  /api/v1/solutions/{solutionsId}/comments/{commentId}:
+    $ref: './comment/comment.yaml'
+  /api/v1/comments/{commentId}/replies:
+    $ref: './reply/replies.yaml'
+  /api/v1/comments/{commentId{/replies/{replyId}:
+    $ref: './reply/reply.yaml'

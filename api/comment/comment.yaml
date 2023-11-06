@@ -1,0 +1,62 @@
+put:
+  summary: 댓글 수정
+  description: 댓글 수정
+  tags: [ Comment ]
+  parameters:
+    - in: path
+      name: solutionId
+      schema:
+        type: number
+      required: true
+      description: 풀이 글 식별자
+    - in: path
+      name: commentId
+      schema:
+        type: number
+      required: true
+      description: 댓글 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: true
+      description: Bearer Access 토큰
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            content:
+              type: string
+              description: 댓글 내용
+  responses:
+    '204':
+      description: 댓글 수정 완료
+
+delete:
+  summary: 댓글 삭제
+  description: 댓글 삭제
+  tags: [ Comment ]
+  parameters:
+    - in: path
+      name: solutionId
+      schema:
+        type: number
+      required: true
+      description: 풀이 글 식별자
+    - in: path
+      name: commentId
+      schema:
+        type: number
+      required: true
+      description: 댓글 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: true
+      description: Bearer Access 토큰
+  responses:
+    '204':
+      description: 댓글 삭제 완료

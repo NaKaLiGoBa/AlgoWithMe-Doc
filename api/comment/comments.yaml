@@ -1,0 +1,98 @@
+get:
+  summary: 풀이 글 댓글 리스트 보기
+  description: 풀이 글 댓글 리스트 보기 - 무한 스크롤
+  tags: [ Comment ]
+  parameters:
+    - in: path
+      name: solutionId
+      schema:
+        type: number
+      required: true
+      description: 풀이 식별자
+    - in: query
+      name: cursor
+      schema:
+        type: number
+      required: false
+      description: 커서
+    - in: query
+      name: size
+      schema:
+        type: number
+      required: false
+      description: 불러올 리스트 길이
+  responses:
+    '200':
+      description: 댓글 리스트
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              totalCount:
+                type: number
+                description: 댓글 총 개수
+              comments:
+                type: array
+                description: 댓글 리스트
+                items:
+                  type: object
+                  properties:
+                    author:
+                      type: object
+                      properties:
+                        avatar:
+                          type: string
+                        nickname:
+                          type: string
+                    comment:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          description: 댓글 식별자
+                        content:
+                          type: string
+                          description: 댓글 내용
+              _link:
+                type: object
+                description: 커서 정소
+                properties:
+                  nextCursor:
+                    type: number
+                    description: 다음 커서
+
+post:
+  summary: 댓글 작성
+  description: 댓글 작성
+  tags: [ Comment ]
+  parameters:
+    - in: path
+      name: solutionId
+      schema:
+        type: number
+      required: true
+      description: 풀이 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: true
+      description: Bearer Access 토큰
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            content:
+              type: string
+              description: 댓글 내용
+  responses:
+    '201':
+      description: 댓글 작성 완료
+      headers:
+        Location:
+          schema:
+            type: number
+          description: 작성된 댓글 식별자
