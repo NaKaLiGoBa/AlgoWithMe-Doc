@@ -1,0 +1,38 @@
+post:
+  summary: 답글 좋아요
+  description: 답글 좋아요
+  tags: [ Reply ]
+  parameters:
+    - in: path
+      name: commentId
+      schema:
+        type: number
+      required: true
+      description: 댓글 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: true
+      description: Bearer Access 토큰
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            requestDateTime:
+              type: string
+              format: date-time
+              description: 요청 일시
+  responses:
+    '200':
+      description: 좋아요 완료
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              isLike:
+                type: boolean
+                description: 좋아요 여부
