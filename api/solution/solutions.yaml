@@ -65,6 +65,9 @@ get:
                         likeCount:
                           type: number
                           description: 좋아요 수
+                        viewCount:
+                          type: number
+                          description: 조회수
               _link:
                 type: object
                 description: 커서 정소

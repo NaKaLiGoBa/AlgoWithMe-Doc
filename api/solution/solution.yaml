@@ -51,6 +51,9 @@ get:
                   likeCount:
                     type: number
                     description: 좋아요 수
+                  viewCount:
+                    type: number
+                    description: 조회수
 
 put:
   summary: 풀이 글 수정
