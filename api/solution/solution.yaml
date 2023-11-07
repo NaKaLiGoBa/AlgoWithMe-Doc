@@ -54,6 +54,9 @@ get:
                   viewCount:
                     type: number
                     description: 조회수
+                  commentCount:
+                    type: number
+                    description: 댓글수
 
 put:
   summary: 풀이 글 수정

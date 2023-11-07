@@ -68,6 +68,9 @@ get:
                         viewCount:
                           type: number
                           description: 조회수
+                        commentCount:
+                          type: number
+                          description: 댓글수
               _link:
                 type: object
                 description: 커서 정소
