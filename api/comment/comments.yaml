@@ -48,6 +48,9 @@ get:
                         content:
                           type: string
                           description: 댓글 내용
+                        likeCount:
+                          type: number
+                          description: 좋아요 수
               pageNumber:
                 type: number
                 description: 현재 페이지 번호
