@@ -54,6 +54,9 @@ get:
                         title:
                           type: string
                           description: 제목
+                        likeCount:
+                          type: number
+                          description: 좋아요 수
               _link:
                 type: object
                 description: 커서 정소

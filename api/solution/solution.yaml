@@ -48,6 +48,9 @@ get:
                     description: 풀이 언어 리스트
                     items:
                       enum: [ "Java", "Python", "JavaScript" ]
+                  likeCount:
+                    type: number
+                    description: 좋아요 수
 
 put:
   summary: 풀이 글 수정
