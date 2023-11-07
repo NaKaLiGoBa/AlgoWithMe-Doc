@@ -1,0 +1,42 @@
+get:
+  summary: 미니 퀴즈 조회
+  description: 미니 퀴즈 조회
+  tags: [ Problem ]
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+  responses:
+    '200':
+      description: 미니퀴즈 정보
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              quizCount:
+                type: number
+                description: 미니퀴즈 수
+              quizzes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      description: 문제 유형
+                      enum: [choice, ox, initial]
+                    choiceOrInitials:
+                      type: array
+                      items:
+                        type: string
+                        description: 선택지 혹은 초성
+                    answer:
+                      type: string
+                      description: 문제 정답
+                    explain:
+                      type: string
+                      description: 문제 설명
