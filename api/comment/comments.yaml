@@ -22,6 +22,12 @@ get:
         enum: [like, recent]
       required: false
       description: 정렬 기준
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: false
+      description: Bearer Access 토큰
   responses:
     '200':
       description: 댓글 리스트
@@ -58,6 +64,9 @@ get:
                         likeCount:
                           type: number
                           description: 좋아요 수
+                        isLike:
+                          type: boolean
+                          description: 좋아요 상태
               pageNumber:
                 type: number
                 description: 현재 페이지 번호

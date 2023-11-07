@@ -15,6 +15,12 @@ get:
         type: number
       required: true
       description: 풀이 글 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: false
+      description: Bearer Access 토큰
   responses:
     '200':
       description: 풀이 글
@@ -57,6 +63,9 @@ get:
                   commentCount:
                     type: number
                     description: 댓글수
+                  isLike:
+                    type: boolean
+                    description: 좋아요 상태
 
 put:
   summary: 풀이 글 수정
