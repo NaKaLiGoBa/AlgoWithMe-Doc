@@ -15,6 +15,13 @@ get:
         type: number
       required: false
       description: 페이지 번호
+    - in: query
+      name: sort
+      schema:
+        type: string
+        enum: [like, recent]
+      required: false
+      description: 정렬 기준
   responses:
     '200':
       description: 댓글 리스트
