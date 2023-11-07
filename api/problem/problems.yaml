@@ -9,6 +9,24 @@ get:
         type: number
       required: false
       description: 페이지 번호
+    - in: query
+      name: tags
+      schema:
+        type: string
+      required: false
+      description: 문제 카테고리
+    - in: query
+      name: difficulty
+      schema:
+        type: string
+      required: false
+      description: 문제 난이도
+    - in: query
+      name: status
+      schema:
+        type: string
+      required: false
+      description: 문제 풀이 상태
     - in: header
       name: Authorization
       schema:
