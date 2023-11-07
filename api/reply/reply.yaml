@@ -1,37 +1,3 @@
-get:
-  summary: 답글 조회
-  description: 답글 조회
-  tags: [ Reply ]
-  parameters:
-    - in: path
-      name: commentId
-      schema:
-        type: number
-      required: true
-      description: 댓글 식별자
-    - in: path
-      name: replyId
-      schema:
-        type: number
-      required: true
-      description: 답글 식별자
-  responses:
-    '200':
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              author:
-                type: object
-                properties:
-                  avatar:
-                    type: string
-                  nickname:
-                    type: string
-              content:
-                type: string
-                description: 답글 내용
 put:
   summary: 답글 수정
   description: 답글 수정
