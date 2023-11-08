@@ -16,6 +16,12 @@ get:
       required: false
       description: 페이지 번호
     - in: query
+      name: size
+      schema:
+        type: number
+      required: false
+      description: 한 페이지 당 보여질 풀이 글 댓글의 개수
+    - in: query
       name: sort
       schema:
         type: string
