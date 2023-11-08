@@ -38,7 +38,7 @@ get:
               likeCount:
                 type: number
                 description: 좋아요 수
-인
+
 post:
   summary: 답글 작성
   description: 답글 작성
