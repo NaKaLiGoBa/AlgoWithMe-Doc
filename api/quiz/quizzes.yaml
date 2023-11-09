@@ -39,4 +39,7 @@ get:
                       description: 문제 정답
                     explain:
                       type: string
+                      description: 문제 해설
+                    description:
+                      type: string
                       description: 문제 설명
