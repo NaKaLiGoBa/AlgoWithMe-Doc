@@ -17,6 +17,9 @@ post:
             nickname:
               type: string
               description: 닉네임
+            role:
+              type: string
+              description: 권한 구분자(optional, 관리자 - admin)
   responses:
     '200':
       description: 회원가입 성공
