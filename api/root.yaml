@@ -46,5 +46,5 @@ paths:
     $ref: './reply/reply.yaml'
   /api/v1/comments/{commentId}/replies/{replyId}/like:
     $ref: './reply/like.yaml'
-  /api/v1/problems/{problemId}/quizzes:
+  /api/v1/problems/{id}/quizzes:
     $ref: './quiz/quizzes.yaml'
