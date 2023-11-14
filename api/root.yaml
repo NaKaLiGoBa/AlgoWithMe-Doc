@@ -48,3 +48,7 @@ paths:
     $ref: './reply/like.yaml'
   /api/v1/problems/{id}/quizzes:
     $ref: './quiz/quizzes.yaml'
+  /api/v1/problems/{id}/coaches:
+    $ref: './coach/coaches.yaml'
+  /api/v1/problems/{problemId}/coaches/{coachId}:
+    $ref: './coach/coach.yaml'

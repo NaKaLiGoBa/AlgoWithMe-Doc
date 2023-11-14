@@ -1,0 +1,34 @@
+get:
+  summary: AI 코치 조회
+  description: AI 코치 조회
+  tags: [ Coach ]
+  parameters:
+    - in: path
+      name: problemId
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+    - in: path
+      name: coachId
+      schema:
+        type: number
+      required: true
+      description: 답변 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: true
+      description: Bearer Access 토큰
+  responses:
+    '200':
+      description: 답변
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              answer:
+                type: string
+                description: 답변

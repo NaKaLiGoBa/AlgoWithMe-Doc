@@ -1,0 +1,90 @@
+post:
+  summary: AI 코치 답변 생성
+  description: AI 코치 답변 생성
+  tags: [ Coach ]
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: true
+      description: Bearer Access 토큰
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            question:
+              type: string
+              description: 질문 내용
+              enum:
+                - 엣지 케이스
+                - 코드 구조와 가독성
+                - 코드 최적화
+                - 알고리즘 선택과 설계
+                - 반례
+            code:
+              type: string
+              description: 작성 중인 코드
+  responses:
+    '201':
+      description: 답변 생성 완료
+      headers:
+        Location:
+          schema:
+            type: number
+          description: 답변 식별자
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              answer:
+                type: string
+                description: 답변
+get:
+  summary: AI 코치 답변 리스트
+  description: AI 코치 답변 리스트
+  tags: [ Coach ]
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: true
+      description: Bearer Access 토큰
+  responses:
+    '200':
+      description: 답변
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              answerCount:
+                type: number
+                description: 답변 개수
+              answers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    question:
+                      type: string
+                      description: 질문 내용
+                    answer:
+                      type: string
+                      description: 답변
