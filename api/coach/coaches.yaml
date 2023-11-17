@@ -1,7 +1,7 @@
 post:
   summary: AI 코치 답변 생성
   description: AI 코치 답변 생성
-  tags: [ Coach ]
+  tags: [ Answer ]
   parameters:
     - in: path
       name: id
@@ -52,7 +52,7 @@ post:
 get:
   summary: AI 코치 답변 리스트
   description: AI 코치 답변 리스트
-  tags: [ Coach ]
+  tags: [ Answer ]
   parameters:
     - in: path
       name: id
