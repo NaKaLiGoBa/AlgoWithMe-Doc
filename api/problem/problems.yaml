@@ -95,6 +95,23 @@ get:
               last:
                 type: boolean
                 description: 현재 페이지가 마지막 페이지인지 아닌지
+              status:
+                type: array
+                items:
+                  type: string
+                  description: 상태
+                example: ['성공', '실패', '미해결']
+              tags:
+                type: array
+                items:
+                  type: string
+                  description: 태그
+              difficulties:
+                type: array
+                items:
+                  type: string
+                  description: 난이도
+                example: ['쉬움', '보통', '어려움']
 # 페이지 번호가 음수 || 너무 클 때
 
 post:
