@@ -90,6 +90,14 @@ get:
               totalSolutionCount:
                 type: number
                 description: 풀이 글 총 개수
+              easierProblemId:
+                type: string
+                format: uri
+                description: 더 쉬운 문제 요청 URL
+              harderProblemId:
+                type: string
+                format: uri
+                description: 더 어려운 문제 요청 URL
     '401':
       description: 문제 정보, 인증 토큰 만료
       content:

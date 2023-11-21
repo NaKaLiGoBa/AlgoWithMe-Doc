@@ -49,4 +49,4 @@ paths:
   /api/v1/problems/{id}/quizzes:
     $ref: './quiz/quizzes.yaml'
   /api/v1/problems/{id}/answers:
-    $ref: './coach/answers.yaml'
+    $ref: './answer/answers.yaml'
