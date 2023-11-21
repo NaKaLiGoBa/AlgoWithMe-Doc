@@ -1,0 +1,52 @@
+get:
+  description: 문제 제출 기록
+  summary: 문제 제출 기록
+  tags: [ Submit ]
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: false
+      description: Bearer access token
+  responses:
+    '200':
+      description: 제출 목록 정보
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              totalCount:
+                type: number
+                description: 총 제출 횟수
+              submits:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    status:
+                      type: string
+                      description: 상태
+                      enum: ["정답", "오답", "컴파일 오류", "런타임 오류"]
+                    language:
+                      type: string
+                      description: 풀이 언어
+                    runtime:
+                      type: string
+                      description: 실행 시간
+                    memory:
+                      type: string
+                      description: 사용 메모리
+                    timeComplexity:
+                      type: string
+                      description: 시간복잡도
+                    spaceComplexity:
+                      type: string
+                      description: 공간복잡도
