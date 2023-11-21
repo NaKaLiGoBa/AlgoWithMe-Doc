@@ -52,3 +52,5 @@ paths:
     $ref: './answer/answers.yaml'
   /api/v1/problems/{id}/submits:
     $ref: './submit/submits.yaml'
+  /api/v1/problems/{problemId}/submits/{submitId}:
+    $ref: './submit/submit.yaml'
