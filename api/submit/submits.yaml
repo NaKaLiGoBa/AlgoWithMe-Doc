@@ -31,6 +31,9 @@ get:
                 items:
                   type: object
                   properties:
+                    id:
+                      type: number
+                      description: 제출 식별자
                     status:
                       type: string
                       description: 상태
