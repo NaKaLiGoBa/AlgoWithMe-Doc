@@ -90,11 +90,11 @@ get:
               totalSolutionCount:
                 type: number
                 description: 풀이 글 총 개수
-              easierProblemId:
+              easierProblemUrl:
                 type: string
                 format: uri
                 description: 더 쉬운 문제 요청 URL
-              harderProblemId:
+              harderProblemUrl:
                 type: string
                 format: uri
                 description: 더 어려운 문제 요청 URL
