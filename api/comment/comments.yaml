@@ -54,6 +54,9 @@ get:
                     author:
                       type: object
                       properties:
+                        id:
+                          type: number
+                          description: 작성자 식별자
                         avatar:
                           type: string
                         nickname:
