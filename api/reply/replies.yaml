@@ -41,6 +41,9 @@ get:
               totalCount:
                 type: number
                 description: 답글 개수
+              isLike:
+                  type: boolean
+                  description: 좋아요 상태
 post:
   summary: 답글 작성
   description: 답글 작성
