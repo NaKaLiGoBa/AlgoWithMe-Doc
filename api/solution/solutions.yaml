@@ -62,6 +62,11 @@ get:
                         title:
                           type: string
                           description: 제목
+                        languages:
+                          type: array
+                          description: 풀이 언어 리스트
+                          items:
+                            enum: [ "Java", "Python", "JavaScript" ]
                         likeCount:
                           type: number
                           description: 좋아요 수
