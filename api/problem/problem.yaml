@@ -90,6 +90,9 @@ get:
               totalSolutionCount:
                 type: number
                 description: 풀이 글 총 개수
+              totalSubmitCount:
+                type: number
+                description: 제출 기록 총 개수
               easierProblemUrl:
                 type: string
                 format: uri
