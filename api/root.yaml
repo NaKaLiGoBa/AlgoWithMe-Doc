@@ -4,7 +4,7 @@ info:
   description: Web IDE
   version: 1.0.1
 servers:
-  - url: 'http://localhost:8080'
+  - url: http://localhost:8080
 paths:
   /api/v1/auth/email:
     $ref: './auth/email.yaml'
