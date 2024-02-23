@@ -1,0 +1,1764 @@
+openapi: 3.0.3
+info:
+  title: Web IDE
+  description: Web IDE
+  version: 1.0.1
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/v1/auth/email:
+    post:
+      summary: 이메일 인증
+      description: 입력한 이메일로 인증번호 요청
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 이메일
+      responses:
+        '200':
+          description: 인증번호 전송 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 인증번호 전송 성공 메시지
+        '422':
+          description: 인증번호 전송 실패
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 인증번호 전송 실패 메시지(이미 등록된 이메일)
+  /api/v1/auth/email/check:
+    post:
+      summary: 이메일 인증 번호 체크
+      description: 이메일 인증을 위한 인증번호 체크
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 이메일
+                authNumber:
+                  type: string
+                  description: 인증번호
+      responses:
+        '200':
+          description: 인증 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 인증 완료 메시지
+        '400':
+          description: 인증 실패
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 인증 실패 메시지
+  /api/v1/auth/signin:
+    post:
+      summary: 로그인
+      description: 이메일과 비밀번호로 로그인
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 이메일
+                password:
+                  type: string
+                  description: 비밀번호
+      responses:
+        '200':
+          description: 로그인 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    description: 인증 토큰
+                  message:
+                    type: string
+                    description: 로그인 성공 메시지
+                  nickname:
+                    type: string
+                    description: 닉네임
+        '401':
+          description: 로그인 실패
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 로그인 실패 메시지
+  /api/v1/auth/signin/kakao:
+    post:
+      summary: 카카오 로그인
+      description: 카카오 계정으로 로그인
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authCode:
+                  type: string
+                  description: 인가코드
+      responses:
+        '200':
+          description: 카카오 로그인 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    description: 인증 토큰
+                  message:
+                    type: string
+                    description: 로그인 성공 메시지
+                  email:
+                    type: string
+                    description: 이메일
+                  nickname:
+                    type: string
+                    description: 닉네임
+        '401':
+          description: 카카오 로그인 실패
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 로그인 실패 메시지(회원가입 필요)
+  /api/v1/auth/signup:
+    post:
+      summary: 회원가입
+      description: 이메일, 비밀번호, 닉네임으로 회원가입
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 이메일
+                password:
+                  type: string
+                  description: 비밀번호
+                nickname:
+                  type: string
+                  description: 닉네임
+                role:
+                  type: string
+                  description: 권한 구분자(optional, 관리자 - admin)
+      responses:
+        '200':
+          description: 회원가입 성공
+        '409':
+          description: 회원가입 실패
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: 예외 코드
+                    enum:
+                      - '100'
+                      - '200'
+                  message:
+                    type: string
+                    description: 회원가입 실패 메시지(이미 등록된 이메일 또는 닉네임)
+  /api/v1/auth/password/reset/email:
+    post:
+      summary: 비밀번호 재설정 요청
+      description: 비밀번호 재설정을 위한 이메일 요청
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 이메일
+      responses:
+        '200':
+          description: 메일 전송 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 비밀번호 재설정을 위한 이메일 전송 완료 메시지
+  /api/v1/auth/password/reset/check:
+    post:
+      summary: 비밀번호 재설정
+      description: 비밀번호 재설정 완료
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newPassword:
+                  type: string
+                  description: 재설정할 비밀번호
+                token:
+                  type: string
+                  description: 사용자 검증을 위한 토큰
+      responses:
+        '200':
+          description: 비밀번호 재설정 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 비밀번호 재설정 완료 메시지
+        '400':
+          description: 비밀번호 재설정 실패
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 비밀번호 재설정 실패 메시지
+  /api/v1/problems:
+    get:
+      summary: 모든 문제 목록 보기
+      description: 모든 문제 목록 보기
+      tags:
+        - Problem
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: number
+          required: false
+          description: 페이지 번호
+        - in: query
+          name: tags
+          schema:
+            type: string
+          required: false
+          description: 문제 카테고리
+        - in: query
+          name: difficulty
+          schema:
+            type: string
+          required: false
+          description: 문제 난이도
+        - in: query
+          name: status
+          schema:
+            type: string
+          required: false
+          description: 문제 풀이 상태
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: false
+          description: Bearer access token
+      responses:
+        '200':
+          description: 문제 목록
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  problems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          description: 문제 식별자
+                        number:
+                          type: number
+                          description: 문제 번호
+                        status:
+                          type: string
+                          description: 상태
+                          enum:
+                            - 성공
+                            - 실패
+                            - 미해결
+                        title:
+                          type: string
+                          description: 문제 제목
+                        acceptance:
+                          type: string
+                          description: 정답률
+                          example: 66.6
+                        difficulty:
+                          type: string
+                          description: 난이도
+                          enum:
+                            - 쉬움
+                            - 보통
+                            - 어려움
+                        tags:
+                          type: array
+                          description: 태그
+                          items:
+                            type: string
+                            description: 태그 이름
+                            enum:
+                              - DFS
+                              - BFS
+                              - Sort
+                  pageNumber:
+                    type: number
+                    description: 현재 페이지 번호
+                  totalPages:
+                    type: number
+                    description: 전체 페이지 개수
+                  totalElements:
+                    type: number
+                    description: 알고리즘 문제 총 개수
+                  size:
+                    type: number
+                    description: 한 페이지에 불러올 수 있는 문제의 최대 개수
+                  numberOfElements:
+                    type: number
+                    description: 현재 페이지의 문제의 개수
+                  first:
+                    type: boolean
+                    description: 현재 페이지가 첫 번째 페이지인지 아닌지
+                  last:
+                    type: boolean
+                    description: 현재 페이지가 마지막 페이지인지 아닌지
+                  status:
+                    type: array
+                    items:
+                      type: string
+                      description: 상태
+                    example:
+                      - 성공
+                      - 실패
+                      - 미해결
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                      description: 태그
+                  difficulties:
+                    type: array
+                    items:
+                      type: string
+                      description: 난이도
+                    example:
+                      - 쉬움
+                      - 보통
+                      - 어려움
+    post:
+      summary: 문제 생성
+      description: Admin 유저가 문제를 생성
+      tags:
+        - Problem
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: false
+          description: Bearer access token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 문제 제목
+                difficulty:
+                  type: string
+                  description: 난이도
+                  enum:
+                    - 쉬움
+                    - 보통
+                    - 어려움
+                description:
+                  type: string
+                  description: 문제 설명
+                parameters:
+                  type: array
+                  description: 입력 파라미터 이름
+                  items:
+                    type: string
+                testcases:
+                  type: string
+                  description: 테스트케이스
+                answerCases:
+                  type: string
+                  description: 채점용 테스트케이스
+                tags:
+                  type: array
+                  description: 태그
+                  items:
+                    type: string
+                    description: 태그 이름
+                    enum:
+                      - DFS
+                      - BFS
+                      - Sort
+      responses:
+        '201':
+          description: 문제 생성 성공
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: 생성된 문제 URI
+  /api/v1/problems/{id}:
+    get:
+      summary: 문제 보기
+      description: 문제 보기
+      tags:
+        - Problem
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: false
+          description: Bearer access token
+      responses:
+        '200':
+          description: 문제 정보
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  number:
+                    type: number
+                    description: 문제 번호
+                  status:
+                    type: string
+                    description: 상태
+                    enum:
+                      - 성공
+                      - 실패
+                      - 미해결
+                  title:
+                    type: string
+                    description: 문제 제목
+                  acceptance:
+                    type: string
+                    description: 정답률
+                    example: 66.6
+                  difficulty:
+                    type: string
+                    description: 난이도
+                    enum:
+                      - 쉬움
+                      - 보통
+                      - 어려움
+                  description:
+                    type: string
+                    description: 문제 설명
+                  defaultCodes:
+                    type: object
+                    properties:
+                      java:
+                        type: string
+                        description: Java 기본 코드
+                      python:
+                        type: string
+                        description: Python 기본 코드
+                      javascript:
+                        type: string
+                        description: JavaScript 기본 코드
+                  testcases:
+                    type: array
+                    description: 테스트케이스
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: number
+                          description: 테스트케이스 번호
+                        inputs:
+                          type: array
+                          items:
+                            type: object
+                            description: 테스트케이스 입력
+                            properties:
+                              name:
+                                type: string
+                                description: 입력 이름
+                              value:
+                                type: string
+                                description: 입력 값
+                        expected:
+                          type: string
+                          description: 테스트케이스 예상 결과
+                  tags:
+                    type: array
+                    description: 태그
+                    items:
+                      type: string
+                      description: 태그 이름
+                      enum:
+                        - DFS
+                        - BFS
+                        - Sort
+                  totalSolutionCount:
+                    type: number
+                    description: 풀이 글 총 개수
+                  totalSubmitCount:
+                    type: number
+                    description: 제출 기록 총 개수
+                  easierProblemUrl:
+                    type: string
+                    format: uri
+                    description: 더 쉬운 문제 요청 URL
+                  harderProblemUrl:
+                    type: string
+                    format: uri
+                    description: 더 어려운 문제 요청 URL
+        '401':
+          description: 문제 정보, 인증 토큰 만료
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  number:
+                    type: number
+                    description: 문제 번호
+                  title:
+                    type: string
+                    description: 문제 제목
+                  acceptance:
+                    type: string
+                    description: 정답률
+                    example: 66.6
+                  difficulty:
+                    type: string
+                    description: 난이도
+                    enum:
+                      - 쉬움
+                      - 보통
+                      - 어려움
+                  description:
+                    type: string
+                    description: 문제 설명
+                  defaultCodes:
+                    type: object
+                    properties:
+                      java:
+                        type: string
+                        description: Java 기본 코드
+                      python:
+                        type: string
+                        description: Python 기본 코드
+                      javascript:
+                        type: string
+                        description: JavaScript 기본 코드
+                  testcases:
+                    type: array
+                    description: 테스트케이스
+                    items:
+                      type: object
+                      properties:
+                        number:
+                          type: number
+                          description: 테스트케이스 번호
+                        inputs:
+                          type: array
+                          items:
+                            type: object
+                            description: 테스트케이스 입력
+                            properties:
+                              name:
+                                type: string
+                                description: 입력 이름
+                              value:
+                                type: string
+                                description: 입력 값
+                        expected:
+                          type: string
+                          description: 테스트케이스 예상 결과
+                  tags:
+                    type: array
+                    description: 태그
+                    items:
+                      type: string
+                      description: 태그 이름
+                      enum:
+                        - DFS
+                        - BFS
+                        - Sort
+                  totalSolutionCount:
+                    type: number
+                    description: 풀이 글 총 개수
+  /api/v1/problems/{id}/code/test:
+    post:
+      summary: 테스트케이스 통과 여부 확인
+      description: 테스트케이스 통과 여부 확인
+      tags:
+        - Code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                language:
+                  type: string
+                  description: 프로그래밍 언어
+                code:
+                  type: string
+                  description: 작성된 풀이 코드
+      responses:
+        '200':
+          description: 통과 여부 확인 성공
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    number:
+                      type: number
+                      description: 테스트케이스 번호
+                    isAnswer:
+                      type: boolean
+                      description: 정답 여부
+                    inputs:
+                      type: array
+                      items:
+                        type: object
+                        description: 입력
+                        properties:
+                          name:
+                            type: string
+                            description: 입력 이름
+                          value:
+                            type: string
+                            description: 입력 값
+                    output:
+                      type: string
+                      description: 출력
+                    expected:
+                      type: string
+                      description: 예상 출력
+        '400':
+          description: 컴파일 및 런타임 오류 발생
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 오류 설명
+                  type:
+                    type: string
+                    description: 어떤 종류의 오류인지
+                    enum:
+                      - Compile Error
+                      - Runtime Error
+  /api/v1/problems/{id}/code/submit:
+    post:
+      summary: 정답 여부 확인
+      description: 정답 여부 확인
+      tags:
+        - Code
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: false
+          description: Bearer access token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                language:
+                  type: string
+                  description: 프로그래밍 언어
+                code:
+                  type: string
+                  description: 작성된 풀이 코드
+      responses:
+        '200':
+          description: 통과 여부 확인 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isAnswer:
+                    type: boolean
+                    description: 정답 여부
+  /api/v1/problems/{id}/solutions:
+    get:
+      summary: 풀이 글 리스트 보기
+      description: 풀이 글 리스트 보기 - 무한 스크롤
+      tags:
+        - Solution
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: query
+          name: cursor
+          schema:
+            type: number
+          required: false
+          description: 커서
+        - in: query
+          name: size
+          schema:
+            type: number
+          required: false
+          description: 불러올 리스트 길이
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum:
+              - hot
+              - recent
+              - like
+            default: recent
+          required: false
+          description: 정렬 기준
+      responses:
+        '200':
+          description: 풀이 글 리스트
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalCount:
+                    type: number
+                    description: 풀이 글 총 개수
+                  solutions:
+                    type: array
+                    description: 풀이 글 목록
+                    items:
+                      type: object
+                      properties:
+                        author:
+                          type: object
+                          properties:
+                            avatar:
+                              type: string
+                            nickname:
+                              type: string
+                        solution:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                              description: 풀이 글 식별자
+                            title:
+                              type: string
+                              description: 제목
+                            languages:
+                              type: array
+                              description: 풀이 언어 리스트
+                              items:
+                                enum:
+                                  - Java
+                                  - Python
+                                  - JavaScript
+                            likeCount:
+                              type: number
+                              description: 좋아요 수
+                            viewCount:
+                              type: number
+                              description: 조회수
+                            commentCount:
+                              type: number
+                              description: 댓글수
+                  _link:
+                    type: object
+                    description: 커서 정소
+                    properties:
+                      nextCursor:
+                        type: number
+                        description: 다음 커서
+    post:
+      summary: 풀이 글 작성
+      description: 풀이 작성
+      tags:
+        - Solution
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 제목
+                content:
+                  type: string
+                  description: 풀이 글 내용
+                languages:
+                  type: array
+                  items:
+                    enum:
+                      - Java
+                      - Python
+                      - JavaScript
+      responses:
+        '201':
+          description: 풀이 글 생성 완료
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: 생성된 풀이 글 URI
+  /api/v1/problems/{problemId}/solutions/{solutionId}:
+    get:
+      summary: 풀이 글 보기
+      description: 풀이 글 보기
+      tags:
+        - Solution
+      parameters:
+        - in: path
+          name: problemId
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: path
+          name: solutionId
+          schema:
+            type: number
+          required: true
+          description: 풀이 글 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: false
+          description: Bearer Access 토큰
+      responses:
+        '200':
+          description: 풀이 글
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  author:
+                    type: object
+                    properties:
+                      avatar:
+                        type: string
+                      nickname:
+                        type: string
+                  solution:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                        description: 제목
+                      createdAt:
+                        type: string
+                        format: date
+                        description: 글 작성 일자
+                      content:
+                        type: string
+                        description: 글 내용
+                      languages:
+                        type: array
+                        description: 풀이 언어 리스트
+                        items:
+                          enum:
+                            - Java
+                            - Python
+                            - JavaScript
+                      likeCount:
+                        type: number
+                        description: 좋아요 수
+                      viewCount:
+                        type: number
+                        description: 조회수
+                      commentCount:
+                        type: number
+                        description: 댓글수
+                      isLike:
+                        type: boolean
+                        description: 좋아요 상태
+    put:
+      summary: 풀이 글 수정
+      description: 풀이 수정
+      tags:
+        - Solution
+      parameters:
+        - in: path
+          name: problemId
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: path
+          name: solutionId
+          schema:
+            type: number
+          required: true
+          description: 풀이 글 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 제목
+                content:
+                  type: string
+                  description: 풀이 글 내용
+                languages:
+                  type: array
+                  items:
+                    enum:
+                      - Java
+                      - Python
+                      - JavaScript
+      responses:
+        '201':
+          description: 풀이 글 수정 완료
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: 수정된 풀이 글 URI
+    delete:
+      summary: 풀이 글 삭제
+      description: 풀이 삭제
+      tags:
+        - Solution
+      parameters:
+        - in: path
+          name: problemId
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: path
+          name: solutionId
+          schema:
+            type: number
+          required: true
+          description: 풀이 글 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      responses:
+        '204':
+          description: 풀이 글 삭제 완료
+  /api/v1/problems/{problemId}/solutions/{solutionId}/like:
+    post:
+      summary: 풀이 글 좋아요
+      description: 풀이 좋아요
+      tags:
+        - Solution
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requestDateTime:
+                  type: string
+                  format: date-time
+                  description: 요청 일시
+      responses:
+        '200':
+          description: 좋아요 완료
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isLike:
+                    type: boolean
+                    description: 좋아요 여부
+  /api/v1/solutions/{solutionId}/comments:
+    get:
+      summary: 풀이 글 댓글 리스트 보기
+      description: 풀이 글 댓글 리스트 보기 - 페이징
+      tags:
+        - Comment
+      parameters:
+        - in: path
+          name: solutionId
+          schema:
+            type: number
+          required: true
+          description: 풀이 식별자
+        - in: query
+          name: page
+          schema:
+            type: number
+          required: false
+          description: 페이지 번호
+        - in: query
+          name: size
+          schema:
+            type: number
+          required: false
+          description: 한 페이지 당 보여질 풀이 글 댓글의 개수
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum:
+              - like
+              - recent
+          required: false
+          description: 정렬 기준
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: false
+          description: Bearer Access 토큰
+      responses:
+        '200':
+          description: 댓글 리스트
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalCount:
+                    type: number
+                    description: 댓글 총 개수
+                  comments:
+                    type: array
+                    description: 댓글 리스트
+                    items:
+                      type: object
+                      properties:
+                        author:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                              description: 작성자 식별자
+                            avatar:
+                              type: string
+                            nickname:
+                              type: string
+                        comment:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                              description: 댓글 식별자
+                            content:
+                              type: string
+                              description: 댓글 내용
+                            likeCount:
+                              type: number
+                              description: 좋아요 수
+                            isLike:
+                              type: boolean
+                              description: 좋아요 상태
+                  pageNumber:
+                    type: number
+                    description: 현재 페이지 번호
+                  totalPages:
+                    type: number
+                    description: 전체 페이지 개수
+                  size:
+                    type: number
+                    description: 한 페이지에 불러올 수 있는 댓글의 최대 개수
+                  numberOfElements:
+                    type: number
+                    description: 현재 페이지의 댓글의 개수
+                  first:
+                    type: boolean
+                    description: 현재 페이지가 첫 번째 페이지인지 아닌지
+                  last:
+                    type: boolean
+                    description: 현재 페이지가 마지막 페이지인지 아닌지
+    post:
+      summary: 댓글 작성
+      description: 댓글 작성
+      tags:
+        - Comment
+      parameters:
+        - in: path
+          name: solutionId
+          schema:
+            type: number
+          required: true
+          description: 풀이 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 댓글 내용
+      responses:
+        '201':
+          description: 댓글 작성 완료
+          headers:
+            Location:
+              schema:
+                type: number
+              description: 작성된 댓글 식별자
+  /api/v1/solutions/{solutionId}/comments/{commentId}:
+    put:
+      summary: 댓글 수정
+      description: 댓글 수정
+      tags:
+        - Comment
+      parameters:
+        - in: path
+          name: solutionId
+          schema:
+            type: number
+          required: true
+          description: 풀이 글 식별자
+        - in: path
+          name: commentId
+          schema:
+            type: number
+          required: true
+          description: 댓글 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 댓글 내용
+      responses:
+        '204':
+          description: 댓글 수정 완료
+    delete:
+      summary: 댓글 삭제
+      description: 댓글 삭제
+      tags:
+        - Comment
+      parameters:
+        - in: path
+          name: solutionId
+          schema:
+            type: number
+          required: true
+          description: 풀이 글 식별자
+        - in: path
+          name: commentId
+          schema:
+            type: number
+          required: true
+          description: 댓글 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      responses:
+        '204':
+          description: 댓글 삭제 완료
+  /api/v1/solutions/{solutionId}/comments/{commentId}/like:
+    post:
+      summary: 댓글 좋아요
+      description: 댓글 좋아요
+      tags:
+        - Comment
+      parameters:
+        - in: path
+          name: solutionId
+          schema:
+            type: number
+          required: true
+          description: 풀이 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requestDateTime:
+                  type: string
+                  format: date-time
+                  description: 요청 일시
+      responses:
+        '200':
+          description: 좋아요 완료
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isLike:
+                    type: boolean
+                    description: 좋아요 여부
+  /api/v1/comments/{commentId}/replies:
+    get:
+      summary: 답글 조회
+      description: 답글 조회
+      tags:
+        - Reply
+      parameters:
+        - in: path
+          name: commentId
+          schema:
+            type: number
+          required: true
+          description: 댓글 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: false
+          description: Bearer Access 토큰
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: 답글 식별자
+                  author:
+                    type: object
+                    properties:
+                      avatar:
+                        type: string
+                      nickname:
+                        type: string
+                  content:
+                    type: string
+                    description: 답글 내용
+                  likeCount:
+                    type: number
+                    description: 좋아요 수
+                  totalCount:
+                    type: number
+                    description: 답글 개수
+                  isLike:
+                    type: boolean
+                    description: 좋아요 상태
+    post:
+      summary: 답글 작성
+      description: 답글 작성
+      tags:
+        - Reply
+      parameters:
+        - in: path
+          name: commentId
+          schema:
+            type: number
+          required: true
+          description: 댓글 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 답글 내용
+      responses:
+        '201':
+          description: 답글 작성 완료
+          headers:
+            Location:
+              schema:
+                type: number
+              description: 작성된 답글 식별자
+  /api/v1/comments/{commentId}/replies/{replyId}:
+    put:
+      summary: 답글 수정
+      description: 답글 수정
+      tags:
+        - Reply
+      parameters:
+        - in: path
+          name: commentId
+          schema:
+            type: number
+          required: true
+          description: 댓글 식별자
+        - in: path
+          name: replyId
+          schema:
+            type: number
+          required: true
+          description: 답글 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 답글 내용
+      responses:
+        '204':
+          description: 답글 수정 완료
+    delete:
+      summary: 답글 삭제
+      description: 답글 삭제
+      tags:
+        - Reply
+      parameters:
+        - in: path
+          name: commentId
+          schema:
+            type: number
+          required: true
+          description: 댓글 식별자
+        - in: path
+          name: replyId
+          schema:
+            type: number
+          required: true
+          description: 답글 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      responses:
+        '204':
+          description: 답글 삭제 완료
+  /api/v1/comments/{commentId}/replies/{replyId}/like:
+    post:
+      summary: 답글 좋아요
+      description: 답글 좋아요
+      tags:
+        - Reply
+      parameters:
+        - in: path
+          name: commentId
+          schema:
+            type: number
+          required: true
+          description: 댓글 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requestDateTime:
+                  type: string
+                  format: date-time
+                  description: 요청 일시
+      responses:
+        '200':
+          description: 좋아요 완료
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isLike:
+                    type: boolean
+                    description: 좋아요 여부
+  /api/v1/problems/{id}/quizzes:
+    get:
+      summary: 미니 퀴즈 조회
+      description: 미니 퀴즈 조회
+      tags:
+        - Problem
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+      responses:
+        '200':
+          description: 미니퀴즈 정보
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quizCount:
+                    type: number
+                    description: 미니퀴즈 수
+                  quizzes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: 문제 유형
+                          enum:
+                            - choice
+                            - ox
+                            - initial
+                        choiceOrInitials:
+                          type: array
+                          items:
+                            type: string
+                            description: 선택지 혹은 초성
+                        answer:
+                          type: string
+                          description: 문제 정답
+                        explain:
+                          type: string
+                          description: 문제 해설
+                        description:
+                          type: string
+                          description: 문제 설명
+  /api/v1/problems/{id}/answers:
+    post:
+      summary: AI 코치 답변 생성
+      description: AI 코치 답변 생성
+      tags:
+        - Answer
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                  description: 질문 내용
+                  enum:
+                    - 엣지 케이스
+                    - 코드 구조와 가독성
+                    - 코드 최적화
+                    - 알고리즘 선택과 설계
+                    - 반례
+                code:
+                  type: string
+                  description: 작성 중인 코드
+      responses:
+        '201':
+          description: 답변 생성 완료
+          headers:
+            Location:
+              schema:
+                type: number
+              description: 답변 식별자
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  answer:
+                    type: string
+                    description: 답변
+    get:
+      summary: AI 코치 답변 리스트
+      description: AI 코치 답변 리스트
+      tags:
+        - Answer
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer Access 토큰
+      responses:
+        '200':
+          description: 답변
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  answerCount:
+                    type: number
+                    description: 답변 개수
+                  answers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        question:
+                          type: string
+                          description: 질문 내용
+                        answer:
+                          type: string
+                          description: 답변
+  /api/v1/problems/{id}/submits:
+    get:
+      description: 문제 제출 기록
+      summary: 문제 제출 기록
+      tags:
+        - Submit
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: false
+          description: Bearer access token
+      responses:
+        '200':
+          description: 제출 목록 정보
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalCount:
+                    type: number
+                    description: 총 제출 횟수
+                  submits:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          description: 제출 식별자
+                        status:
+                          type: string
+                          description: 상태
+                          enum:
+                            - 정답
+                            - 오답
+                            - 컴파일 오류
+                            - 런타임 오류
+                        language:
+                          type: string
+                          description: 풀이 언어
+                        runtime:
+                          type: string
+                          description: 실행 시간
+                        memory:
+                          type: string
+                          description: 사용 메모리
+                        timeComplexity:
+                          type: string
+                          description: 시간복잡도
+                        spaceComplexity:
+                          type: string
+                          description: 공간복잡도
+  /api/v1/problems/{problemId}/submits/{submitId}:
+    get:
+      summary: 제출 코드 보기
+      description: 제출 코드 보기
+      tags:
+        - Submit
+      parameters:
+        - in: path
+          name: problemId
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: path
+          name: submitId
+          schema:
+            type: number
+          required: true
+          description: 제출 식별자
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: false
+          description: Bearer access token
+      responses:
+        '200':
+          description: 제출 정보
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: 제출 코드
