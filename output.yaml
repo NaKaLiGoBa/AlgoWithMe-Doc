@@ -1082,18 +1082,24 @@ paths:
       tags:
         - Solution
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: number
-          required: true
-          description: 문제 식별자
         - in: header
           name: Authorization
           schema:
             type: string
           required: true
           description: Bearer Access 토큰
+        - in: path
+          name: problemId
+          schema:
+            type: number
+          required: true
+          description: 문제 식별자
+        - in: path
+          name: solutionId
+          schema:
+            type: number
+          required: true
+          description: 풀이 식별자
       requestBody:
         content:
           application/json:
@@ -1327,6 +1333,12 @@ paths:
             type: number
           required: true
           description: 풀이 식별자
+        - in: path
+          name: commentId
+          schema:
+            type: number
+          required: true
+          description: 댓글 식별자
         - in: header
           name: Authorization
           schema:
@@ -1515,6 +1527,12 @@ paths:
             type: number
           required: true
           description: 댓글 식별자
+        - in: path
+          name: replyId
+          schema:
+            type: number
+          required: true
+          description: 답글 식별자
         - in: header
           name: Authorization
           schema:
