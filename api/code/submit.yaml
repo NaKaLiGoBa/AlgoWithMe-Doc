@@ -9,6 +9,12 @@ post:
         type: string
       required: false
       description: Bearer access token
+    - in: path
+      name: id
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
   requestBody:
     content:
       application/json:

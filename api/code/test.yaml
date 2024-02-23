@@ -2,6 +2,19 @@ post:
   summary: 테스트케이스 통과 여부 확인
   description: 테스트케이스 통과 여부 확인
   tags: [ Code ]
+  parameters:
+    - in: header
+      name: Authorization
+      schema:
+        type: string
+      required: false
+      description: Bearer access token
+    - in: path
+      name: id
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
   requestBody:
     content:
       application/json:
