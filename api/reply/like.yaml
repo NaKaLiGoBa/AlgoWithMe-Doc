@@ -9,6 +9,12 @@ post:
         type: number
       required: true
       description: 댓글 식별자
+    - in: path
+      name: replyId
+      schema:
+        type: number
+      required: true
+      description: 답글 식별자
     - in: header
       name: Authorization
       schema:

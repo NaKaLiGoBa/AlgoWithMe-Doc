@@ -3,18 +3,24 @@ post:
   description: 풀이 좋아요
   tags: [ Solution ]
   parameters:
-    - in: path
-      name: id
-      schema:
-        type: number
-      required: true
-      description: 문제 식별자
     - in: header
       name: Authorization
       schema:
         type: string
       required: true
       description: Bearer Access 토큰
+    - in: path
+      name: problemId
+      schema:
+        type: number
+      required: true
+      description: 문제 식별자
+    - in: path
+      name: solutionId
+      schema:
+        type: number
+      required: true
+      description: 풀이 식별자
   requestBody:
     content:
       application/json:
