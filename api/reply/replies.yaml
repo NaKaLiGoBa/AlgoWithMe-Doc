@@ -17,6 +17,7 @@ get:
       description: Bearer Access 토큰
   responses:
     '200':
+      description: 성공
       content:
         application/json:
           schema:
